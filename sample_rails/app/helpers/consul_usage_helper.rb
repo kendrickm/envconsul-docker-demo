@@ -1,0 +1,2 @@
+module ConsulUsageHelper
+end

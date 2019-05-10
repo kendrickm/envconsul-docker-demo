@@ -1,0 +1,17 @@
+version: '3.5'
+services:
+  consul:
+    image: consul:latest
+    ports:
+      - "8500:8500"    
+    command: "agent -server -bootstrap-expect 1 -ui -client 0.0.0.0"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8500/v1/status/leader"]
+  rails:
+    build:
+      context: sample_rails
+    image: sample_rails
+    depends_on:
+      - consul
+    ports:
+      - "9292:9292"
