@@ -1,8 +1,10 @@
-FROM ruby:2.5
+FROM ruby:2.5-alpine3.8
 
 ENV ENVCONSUL_VER="0.7.3"
 
-RUN apt-get update -qq && apt-get install -y wget bash nodejs && \
+RUN apk --no-cache --update add \
+  build-base gcc libffi-dev wget bash nodejs && \
+  rm -rf /var/cache/apk/* && \
   wget https://releases.hashicorp.com/envconsul/${ENVCONSUL_VER}/envconsul_${ENVCONSUL_VER}_linux_amd64.zip && \
   unzip envconsul_${ENVCONSUL_VER}_linux_amd64.zip && \
   mv envconsul /usr/local/bin/envconsul && \
